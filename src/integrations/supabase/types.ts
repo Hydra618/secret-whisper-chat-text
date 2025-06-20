@@ -147,6 +147,44 @@ export type Database = {
         }
         Relationships: []
       }
+      messages: {
+        Row: {
+          content: string
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          is_deleted: boolean | null
+          room_name: string
+          token_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          is_deleted?: boolean | null
+          room_name: string
+          token_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          is_deleted?: boolean | null
+          room_name?: string
+          token_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_token_id_fkey"
+            columns: ["token_id"]
+            isOneToOne: false
+            referencedRelation: "tokens"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -167,6 +205,68 @@ export type Database = {
           username?: string | null
         }
         Relationships: []
+      }
+      tokens: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          last_used: string | null
+          room_name: string
+          token_value: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_used?: string | null
+          room_name: string
+          token_value: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_used?: string | null
+          room_name?: string
+          token_value?: string
+        }
+        Relationships: []
+      }
+      typing_indicators: {
+        Row: {
+          id: string
+          is_typing: boolean | null
+          room_name: string
+          token_id: string | null
+          updated_at: string | null
+          user_identifier: string
+        }
+        Insert: {
+          id?: string
+          is_typing?: boolean | null
+          room_name: string
+          token_id?: string | null
+          updated_at?: string | null
+          user_identifier: string
+        }
+        Update: {
+          id?: string
+          is_typing?: boolean | null
+          room_name?: string
+          token_id?: string | null
+          updated_at?: string | null
+          user_identifier?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "typing_indicators_token_id_fkey"
+            columns: ["token_id"]
+            isOneToOne: false
+            referencedRelation: "tokens"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       wellness_progress: {
         Row: {
@@ -248,6 +348,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_expired_messages: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_old_typing_indicators: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       update_bot_session_stats: {
         Args:
           | Record<PropertyKey, never>
