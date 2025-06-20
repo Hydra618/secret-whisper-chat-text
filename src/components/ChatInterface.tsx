@@ -8,6 +8,9 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { supabase } from '@/integrations/supabase/client';
 
+const SUPABASE_URL = "https://uocdjklgmacbnzzthaxg.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvY2Rqa2xnbWFjYm56enRoYXhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1NjYzNTEsImV4cCI6MjA2NTE0MjM1MX0.aLbDw6l7rwVJPQ3wqlY9ZmtPqINU7JJDgOiIQblmtoA";
+
 interface Message {
   id: string;
   content: string;
@@ -40,10 +43,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ tokenId, roomName, onLogo
   const loadMessages = async () => {
     try {
       const response = await fetch(
-        `${supabase.supabaseUrl}/functions/v1/chat-messages?roomName=${encodeURIComponent(roomName)}`,
+        `${SUPABASE_URL}/functions/v1/chat-messages?roomName=${encodeURIComponent(roomName)}`,
         {
           headers: {
-            'Authorization': `Bearer ${supabase.supabaseKey}`,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             'Content-Type': 'application/json',
           },
         }
@@ -69,11 +72,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ tokenId, roomName, onLogo
 
     try {
       const response = await fetch(
-        `${supabase.supabaseUrl}/functions/v1/chat-messages`,
+        `${SUPABASE_URL}/functions/v1/chat-messages`,
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${supabase.supabaseKey}`,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -104,11 +107,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ tokenId, roomName, onLogo
   const updateTypingIndicator = async (typing: boolean) => {
     try {
       await fetch(
-        `${supabase.supabaseUrl}/functions/v1/typing-indicator`,
+        `${SUPABASE_URL}/functions/v1/typing-indicator`,
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${supabase.supabaseKey}`,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({

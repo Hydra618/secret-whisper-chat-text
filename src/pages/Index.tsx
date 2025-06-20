@@ -4,8 +4,10 @@ import { Loader2 } from 'lucide-react';
 import FileUpload from '@/components/FileUpload';
 import ChatInterface from '@/components/ChatInterface';
 import ThemeToggle from '@/components/ThemeToggle';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+
+const SUPABASE_URL = "https://uocdjklgmacbnzzthaxg.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvY2Rqa2xnbWFjYm56enRoYXhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk1NjYzNTEsImV4cCI6MjA2NTE0MjM1MX0.aLbDw6l7rwVJPQ3wqlY9ZmtPqINU7JJDgOiIQblmtoA";
 
 const Index: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,11 +20,11 @@ const Index: React.FC = () => {
     
     try {
       const response = await fetch(
-        `${supabase.supabaseUrl}/functions/v1/auth-token`,
+        `${SUPABASE_URL}/functions/v1/auth-token`,
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${supabase.supabaseKey}`,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
